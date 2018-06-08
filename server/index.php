@@ -5,7 +5,13 @@
 #header("X-productionMode: false");
 
 // Set the sleep interval for the doorsigns via the server
-#header("X-sleepInterval: 60 ");
+$now_h = date('G'); // 0..23
+if($now_h == 22){
+	header("X-sleepInterval: 32400 "); // Long sleep 9h
+} else{
+	header("X-sleepInterval: 900 "); // Short sleep 15min
+}
+
 
 error_reporting('E_ERROR');
 # Supported displays:
