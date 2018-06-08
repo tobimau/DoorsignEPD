@@ -409,6 +409,7 @@ void loop() {
       }
       Serial.println("Going to deep sleep now...");
       Serial.flush();
+      esp_wifi_stop();
       esp_deep_sleep_start();
     }
 };
