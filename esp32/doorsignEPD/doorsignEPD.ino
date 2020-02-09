@@ -41,37 +41,36 @@ long   sleepIntervalSetbyHeader = 0;                  //* Changed if the sleep i
 #include <GxEPD.h>
 
 #if DISPLAY_TYPE == '1.5'
-#include <GxGDEP015OC1/GxGDEP015OC1.cpp>      // 1.54" b/w
+#include <GxGDEP015OC1/GxGDEP015OC1.h>      // 1.54" b/w
 bool hasRed = false;
 String displayType = "1.5";
 #endif
 #if DISPLAY_TYPE == '2.9'
-#include <GxGDEH029A1/GxGDEH029A1.cpp>      // 2.9" b/w
+#include <GxGDEH029A1/GxGDEH029A1.h>      // 2.9" b/w
 bool hasRed = false;
 String displayType = "2.9";
 #endif
 #if DISPLAY_TYPE == '4.2'
-#include <GxGDEW042T2/GxGDEW042T2.cpp>      // 4.2" b/w
+#include <GxGDEW042T2/GxGDEW042T2.h>      // 4.2" b/w
 bool hasRed = false;
 String displayType = "4.2";
 #endif
 #if DISPLAY_TYPE == '4.2bwr'
-#include <GxGDEW042Z15/GxGDEW042Z15.cpp>       // 4.2" b/w/r
+#include <GxGDEW042Z15/GxGDEW042Z15.h>       // 4.2" b/w/r
 bool hasRed = true;
 String displayType = "4.2bwr";
 #endif
 #if DISPLAY_TYPE == '7.5'
-#include <GxGDEW075T8/GxGDEW075T8.cpp>      // 7.5" b/w
+#include <GxGDEW075T8/GxGDEW075T8.h>      // 7.5" b/w
 bool hasRed = false;
 String displayType = "7.5";
 #endif
 #if DISPLAY_TYPE == '7.5bwr'
-#include <GxGDEW075Z09/GxGDEW075Z09.cpp>      // 7.5" b/w/r
+#include <GxGDEW075Z09/GxGDEW075Z09.h>      // 7.5" b/w/r
 bool hasRed = true;
 String displayType = "7.5bwr";
 #endif
-#include <GxIO/GxIO_SPI/GxIO_SPI.cpp>
-#include <GxIO/GxIO.cpp>
+#include <GxIO/GxIO_SPI/GxIO_SPI.h>
 #include <Fonts/FreeMonoBold9pt7b.h>
 
 GxIO_Class io(SPI, CHIP_SELECT, 17, 16);
@@ -239,7 +238,7 @@ void onConnectHandler(void *r, AsyncClient *client){
   tcpClientConnected = true;
   tcpClientConnectionInProgress = false;
   if (STATUS_PIN >= 0){
-    digitalWrite(5, HIGH);
+    digitalWrite(STATUS_PIN, HIGH);
   }
   String url =  iot.configuration.get("ImageAddress") + "&display=" + displayType;
   String query = String("GET ") + url + " HTTP/1.1\r\n" +
@@ -353,7 +352,7 @@ int16_t findEndHeader(char *buf, size_t len){
 void transmitDone(){
   Serial.println("transmitDone");
   if (STATUS_PIN >= 0){
-    digitalWrite(5, LOW);
+    digitalWrite(STATUS_PIN, LOW);
   }
   tcpClientConnected = false;
   tcpClientConnectionInProgress = false;
